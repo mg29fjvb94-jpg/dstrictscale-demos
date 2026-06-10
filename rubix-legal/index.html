@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Client Enquiry — Rubix Legal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Inter',sans-serif;
+    background:#f7f5f1;
+    color:#1f2a37;
+    line-height:1.6;
+    padding:0;
+  }
+  header {
+    background:#1c2d3e;
+    color:#f7f5f1;
+    padding:28px 48px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .firm-name {
+    font-family:'Source Serif 4',serif;
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:0.5px;
+  }
+  .firm-tag {
+    font-size:12px;
+    color:#b8c2cc;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+  }
+  main {
+    max-width:680px;
+    margin:0 auto;
+    padding:48px 24px 80px;
+  }
+  .intro h1 {
+    font-family:'Source Serif 4',serif;
+    font-size:30px;
+    font-weight:600;
+    margin-bottom:12px;
+    color:#1c2d3e;
+  }
+  .intro p {
+    color:#5a6672;
+    font-size:15px;
+    margin-bottom:36px;
+    max-width:520px;
+  }
+  form {
+    background:#ffffff;
+    border:1px solid #e6e1d6;
+    border-radius:10px;
+    padding:36px;
+  }
+  .field-group { margin-bottom:24px; }
+  .field-row { display:flex; gap:16px; }
+  .field-row .field-group { flex:1; }
+  label {
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:#1c2d3e;
+    margin-bottom:8px;
+  }
+  label .req { color:#b8860b; }
+  input, select, textarea {
+    width:100%;
+    padding:12px 14px;
+    border:1px solid #d8d2c4;
+    border-radius:6px;
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    color:#1f2a37;
+    background:#fdfcf9;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline:none;
+    border-color:#1c2d3e;
+    box-shadow:0 0 0 3px rgba(28,45,62,0.08);
+  }
+  textarea { resize:vertical; min-height:90px; }
+  .help-text {
+    font-size:12px;
+    color:#8a93a0;
+    margin-top:6px;
+  }
+  .section-divider {
+    border-top:1px solid #e6e1d6;
+    margin:32px 0;
+    padding-top:8px;
+  }
+  .section-label {
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:#b8860b;
+    margin-bottom:20px;
+  }
+  .submit-btn {
+    width:100%;
+    background:#1c2d3e;
+    color:#f7f5f1;
+    border:none;
+    padding:15px;
+    border-radius:6px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background .2s;
+  }
+  .submit-btn:hover { background:#2c425c; }
+
+  /* Confirmation state */
+  #confirmation { display:none; }
+  #confirmation .check-icon {
+    width:56px; height:56px;
+    background:#1c2d3e;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 24px;
+  }
+  #confirmation .check-icon svg { width:28px; height:28px; }
+  #confirmation h2 {
+    font-family:'Source Serif 4',serif;
+    font-size:24px;
+    text-align:center;
+    margin-bottom:16px;
+    color:#1c2d3e;
+  }
+  .timeline {
+    margin-top:28px;
+    border-top:1px solid #e6e1d6;
+    padding-top:24px;
+  }
+  .timeline-item {
+    display:flex;
+    gap:16px;
+    margin-bottom:20px;
+    align-items:flex-start;
+  }
+  .timeline-dot {
+    width:10px; height:10px;
+    border-radius:50%;
+    background:#b8860b;
+    margin-top:5px;
+    flex-shrink:0;
+  }
+  .timeline-dot.pending { background:#d8d2c4; }
+  .timeline-dot.ongoing { background:#3b7a3b; }
+  .timeline-content b { display:block; font-size:14px; color:#1c2d3e; margin-bottom:2px; }
+  .timeline-content span { font-size:13px; color:#8a93a0; }
+
+  .demo-banner {
+    background:#fdf6e3;
+    border:1px solid #e8d9a8;
+    color:#7a5c00;
+    font-size:12px;
+    text-align:center;
+    padding:8px;
+    font-weight:500;
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">DEMO — built for Rubix Legal to show how an automated intake flow could look · Dstrictscale</div>
+
+<header>
+  <div>
+    <div class="firm-name">Rubix Legal</div>
+    <div class="firm-tag">Gold Coast · Employment Law</div>
+  </div>
+</header>
+
+<main>
+  <div id="form-view">
+    <div class="intro">
+      <h1>New Client Enquiry</h1>
+      <p>Tell us a little about your situation and we'll be in touch to arrange a confidential
+      first appointment. This usually takes about 3 minutes.</p>
+    </div>
+
+    <form id="intake-form" onsubmit="return showConfirmation(event)">
+      <div class="section-label">Your Details</div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" required placeholder="Jane Smith">
+        </div>
+        <div class="field-group">
+          <label>Phone <span class="req">*</span></label>
+          <input type="tel" required placeholder="04XX XXX XXX">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Email <span class="req">*</span></label>
+        <input type="email" required placeholder="jane@email.com">
+      </div>
+
+      <div class="section-divider"></div>
+      <div class="section-label">Your Matter</div>
+
+      <div class="field-group">
+        <label>What can we help with? <span class="req">*</span></label>
+        <select required>
+          <option value="">Select one</option>
+          <option>Workplace Bullying or Harassment</option>
+          <option>Workplace Discrimination</option>
+          <option>Unfair Dismissal</option>
+          <option>Unlawful / Wrongful Termination</option>
+          <option>General Protections Claim</option>
+          <option>Underpayment / Wage Claim</option>
+          <option>Redundancy Dispute</option>
+          <option>Restraint of Trade</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Brief description of your situation <span class="req">*</span></label>
+        <textarea required placeholder="A few sentences is fine — this helps us prepare before we speak."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>Do you already have supporting documents? (emails, messages, HR correspondence, payslips)</label>
+        <select>
+          <option value="">Select one</option>
+          <option>Yes, I have most of them</option>
+          <option>Some — not sure what's relevant</option>
+          <option>No, not yet</option>
+        </select>
+        <div class="help-text">No need to attach anything now — we'll send a secure upload link and follow up automatically until everything's received.</div>
+      </div>
+
+      <div class="section-divider"></div>
+      <div class="section-label">Conflict Check</div>
+
+      <div class="field-group">
+        <label>Name of your employer</label>
+        <input type="text" placeholder="So we can check we're not already acting for them">
+        <div class="help-text">We're required to check this before we can act for you — it's a standard step.</div>
+      </div>
+
+      <div class="section-divider"></div>
+      <div class="section-label">Timing</div>
+
+      <div class="field-group">
+        <label>How urgent is this? <span class="req">*</span></label>
+        <select required>
+          <option value="">Select one</option>
+          <option>Urgent — needs attention this week</option>
+          <option>Important — within the next 2-3 weeks</option>
+          <option>Not urgent — exploring my options</option>
+        </select>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Enquiry</button>
+    </form>
+  </div>
+
+  <div id="confirmation">
+    <div class="check-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 13l4 4L19 7" stroke="#f7f5f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>Thanks — we've received your enquiry</h2>
+    <p style="text-align:center; color:#5a6672; font-size:14px;">
+      Here's what happens next. No need to call — we'll be in touch.
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <b>Engagement letter &amp; fee agreement sent to your email</b>
+          <span>Sent automatically — just now</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <b>Secure document upload link sent</b>
+          <span>Based on your matter type — sent just now</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot ongoing"></div>
+        <div class="timeline-content">
+          <b>Automatic reminders for anything outstanding</b>
+          <span>Ongoing — no manual chasing needed from our team</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot pending"></div>
+        <div class="timeline-content">
+          <b>Conflict check reviewed by our team</b>
+          <span>Within 1 business day</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot pending"></div>
+        <div class="timeline-content">
+          <b>Appointment confirmation</b>
+          <span>You'll receive a calendar booking link once cleared</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+function showConfirmation(e) {
+  e.preventDefault();
+  document.getElementById('form-view').style.display = 'none';
+  document.getElementById('confirmation').style.display = 'block';
+  return false;
+}
+</script>
+
+</body>
+</html>
